@@ -1,0 +1,163 @@
+#======================================================
+#   Root Widget
+#======================================================
+<Root>:
+    canvas:
+        Color:
+            rgba: 0.8, 0.8, 0.8, 1
+        Rectangle:
+            size: self.size
+            pos: self.pos
+
+    ScreenManager:
+        id: MainWindow
+
+        LoginScreen:
+            name: "LoginScreen"
+
+        TestScreen:
+            name: "TestScreen"
+
+#======================================================
+#   Top Bar
+#======================================================
+
+<TopBar@ActionBar>
+    #on_previous: print "Back"
+    #app.navBack()
+    ActionView:
+        ActionPrevious:
+            title: app.app_name
+            with_previous: app.nav_previous_enabled
+            on_press: app.navBack()
+        ActionOverflow:
+        ActionButton:
+            text: 'Logout'
+
+
+
+#======================================================
+#   Test Screen
+#======================================================
+
+<TestScreen>
+    StackLayout:
+        TopBar:
+        Label:
+            text: "Name: {}".format(root.name)
+            size_hint: (0.5, 0.3)
+            canvas.before:
+                Color:
+                    rgba: 0, 0, 0, 0.8
+                Rectangle:
+                    size: self.size
+                    pos: self.pos
+
+        Button:
+            size_hint: (0.5, 0.3)
+            text: "Create Another Screen!"
+            on_press: root.onButtonPress()
+
+
+
+#======================================================
+#   Login Screen
+#======================================================
+
+<LoginGridLabel@Label>:
+    size_hint_y: None
+    height: '50sp'
+    canvas.before:
+        Color:
+            rgba: 0, 0.3, 0.3, 1
+        Rectangle:
+            size: self.size
+            pos: self.pos
+
+    font_size: '24sp'
+
+<LoginTextInput@TextInput>
+    text: ''
+    write_tab: False
+    tab_width: 0
+    font_size: '20sp'
+    padding: [5, ( self.height - self.line_height ) / 2]
+    multiline: False
+
+<LoginScreen>:
+    StackLayout:
+
+        padding: '20sp'
+
+        Label:
+            text: "Please Log In"
+            size_hint_y: None
+            height: '20sp'
+            color: 0.8, 0.8, 0.8, 1
+            font_size: '24sp'
+
+        GridLayout:
+            cols: 2
+            size_hint_y: None
+            height: '50sp'
+            font_size: '24sp'
+            canvas.before:
+                Color:
+                    rgba: 0, 0.3, 0.3, 1
+                Rectangle:
+                    size: self.size
+                    pos: self.pos
+
+            LoginGridLabel:
+                text: 'Username:'
+
+            LoginTextInput:
+                text: ''
+                id: UsernameInput
+
+            LoginGridLabel:
+                text: 'Password:'
+
+            LoginGridLabel:
+                text: ''
+                id: PasswordInput
+                allow_copy: False
+                password: True
+
+        Button:
+            font_size: '28sp'
+            size_hint_y: None
+            height: '60dp'
+            text: 'Login'
+            on_press: root.onLoginAttempt()
+
+#======================================================
+#   PopupBox
+#======================================================
+
+<PopupMessage@Popup>:
+
+    buttonText: 'Ok'
+    message: 'No Message!'
+    title: 'No Title!'
+    font_size: '24sp'
+
+    auto_dismiss: False
+
+    size_hint: 0.8, 0.5
+
+    # create content and add to the popup
+    StackLayout:
+
+        Label:
+            size_hint_y: 0.8
+            text: root.message
+        Button:
+            size_hint_y: 0.2
+            font_size: '28sp'
+            text: root.buttonText
+            on_press: root.dismiss()
+
+
+
+
